@@ -12,11 +12,14 @@ public class BotaoPeca : MonoBehaviour
 
     private Sprite X;
     private Sprite O;
+
+    public int Valor { get => valor; }
+    public EnumEstado Jogador;
+
     // Start is called before the first frame update
     void Start()
     {
         imagem = GetComponent<Image>();
-       
         valor = 0;
     }
 
@@ -32,17 +35,29 @@ public class BotaoPeca : MonoBehaviour
         {
             Destroy(imagem);
         }
+        valor = 0;
 
     }
 
     public void PosicionarPeca(EnumEstado estado)
     {
+        this.valor = (int)estado;
         Sprite spr = null;
+
+        if (estado == EnumEstado.Empate)
+        {
+            if (TryGetComponent<Image>(out imagem))
+            {
+                Destroy(imagem);
+            }
+            return;
+        }
+
         if (estado == EnumEstado.MAX)
         {
             spr = Resources.Load<Sprite>("img/xizinho");
         }
-        else if(estado == EnumEstado.MIN)
+        else if (estado == EnumEstado.MIN)
         {
             spr = Resources.Load<Sprite>("img/bolinha");
         }
@@ -50,14 +65,20 @@ public class BotaoPeca : MonoBehaviour
         if (TryGetComponent<Image>(out imagem))
         {
             imagem.sprite = spr;
+
         }
         else
         {
-            
-          imagem = gameObject.AddComponent<Image>() as Image;
-          imagem.sprite = spr;
+
+            imagem = gameObject.AddComponent<Image>() as Image;
+            imagem.sprite = spr;
         }
 
+    }
+
+    void OnMouseDown()
+    {
+        PosicionarPeca(EnumEstado.MIN);
     }
 
 }

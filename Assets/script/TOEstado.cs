@@ -82,8 +82,6 @@ namespace MinimaxSpace
                 }
             }
 
-
-
             return semEspaco;
         }
 
@@ -94,7 +92,7 @@ namespace MinimaxSpace
     {
         MIN = -1,// O
         MAX = 1, // X
-        Empate
+        Empate = 0
 
     }
 

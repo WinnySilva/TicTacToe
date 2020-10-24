@@ -7,26 +7,16 @@ using MinimaxSpace;
 public class TicTacToe : MonoBehaviour
 {
 
-    public UnityEngine.Object[] pecas;
-    public Int32[,] matrix;
-    public EnumEstado jogador;
+    public UnityEngine.GameObject[] pecas;
+    public EnumEstado jogadorAtual;
+    TOEstado tabuleiroAtual;
 
     // Start is called before the first frame update
     void Start()
     {
 
         MinMax alg = new MinMax();
-        TOEstado estadoInicial;
-
-        estadoInicial = new TOEstado();
-        estadoInicial.Estado = EnumEstado.MAX;
-        matrix = new Int32[3, 3] { { 1, -1, 1 }, { -1, 1, -1 }, { -1, 0, 0 } }; //{ { 1, 0, -1 }, { 0, 1, 0 }, { -1, 0, -1 } };
-        estadoInicial.Tabuleiro = matrix;
-        Debug.Log("Estado Final? "+estadoInicial.EhEstadoFinal());
-        alg.GeraProximosEstados(estadoInicial);
-
-        TOEstado estadoProx = alg.MinmaxAvaliacao(estadoInicial);
-        alg.PrintarMtrix(estadoProx.Tabuleiro);
+        TabuleiroInicial();
     }
 
     // Update is called once per frame
@@ -34,4 +24,31 @@ public class TicTacToe : MonoBehaviour
     {
 
     }
+
+    public void TabuleiroInicial()
+    {
+        tabuleiroAtual = new TOEstado();
+        //Proximo a jogar eh o Min
+        tabuleiroAtual.Estado = EnumEstado.MAX;
+        tabuleiroAtual.Tabuleiro = new Int32[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        MatrixParaTabuleiro(tabuleiroAtual.Tabuleiro);
+    }
+
+
+    private void MatrixParaTabuleiro(Int32[,] matrix)
+    {
+        EnumEstado estado;
+        BotaoPeca peca;
+        int iPecas = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                estado = (EnumEstado)matrix[i, j];
+                peca = pecas[iPecas++].GetComponent<BotaoPeca>();
+                peca.PosicionarPeca(estado);
+            }
+        }
+    }
+
 }
