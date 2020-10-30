@@ -26,17 +26,17 @@ namespace MinimaxSpace
             {
                 TOEstado avaliacao = MinmaxAvaliacao(filho);
 
-                if (avaliacao.Estado == EnumEstado.Empate)
+                if (avaliacao.Ganhador == EnumEstado.Empate)
                 {
-                    empates.Add(avaliacao);
+                    empates.Add(filho);
                 }
-                else if (avaliacao.Estado == jogadorProximo)
+                else if (avaliacao.Ganhador == jogadorProximo)
                 {
-                    boaJogada.Add(avaliacao);
+                    boaJogada.Add(filho);
                 }
                 else
                 {
-                    jogadaRuim.Add(avaliacao);
+                    jogadaRuim.Add(filho);
                 }
 
             }
@@ -61,7 +61,7 @@ namespace MinimaxSpace
         {
             List<TOEstado> filhos = new List<TOEstado>();
             Int32[,] matrizEstado = estadoAtual.Tabuleiro;
-            EnumEstado jogadorProximo = estadoAtual.Estado == EnumEstado.MAX ? EnumEstado.MIN : EnumEstado.MAX;
+            EnumEstado jogadorProximo = estadoAtual.Estado == EnumEstado.MAX ? EnumEstado.MIN : EnumEstado.MAX; // SE O ESTADO ATUAL É MAX, Os PROXIMOs são MIN
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)

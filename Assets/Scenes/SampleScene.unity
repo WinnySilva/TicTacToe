@@ -128,6 +128,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name
@@ -253,6 +268,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218897, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Enabled
@@ -395,6 +425,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name
@@ -616,6 +661,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
     - target: {fileID: 6920294040156218897, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Enabled
@@ -746,6 +801,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name
@@ -883,6 +948,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name
@@ -1155,6 +1230,7 @@ MonoBehaviour:
   - {fileID: 524323332}
   - {fileID: 1852037350}
   jogadorAtual: 2
+  estadoPartida: 0
 --- !u!1001 &1671474909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1162,6 +1238,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name
@@ -1471,6 +1562,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name
@@ -1598,6 +1694,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1583209780}
     m_Modifications:
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: tab
+      value: 
+      objectReference: {fileID: 1599007525}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457191309194530868, guid: f801eae594972c1498190490020c396e,
+        type: 3}
+      propertyPath: coord.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6920294040156218898, guid: f801eae594972c1498190490020c396e,
         type: 3}
       propertyPath: m_Name

@@ -7,14 +7,17 @@ using UnityEngine.UI;
 
 public class BotaoPeca : MonoBehaviour
 {
+    public int Valor { get => valor; }
+    public EnumEstado Jogador;
+    public Vector2Int coord;
+    public TicTacToe tab;
+
     private Image imagem;
     private int valor;
-
     private Sprite X;
     private Sprite O;
 
-    public int Valor { get => valor; }
-    public EnumEstado Jogador;
+
 
     // Start is called before the first frame update
     void Start()
@@ -72,13 +75,14 @@ public class BotaoPeca : MonoBehaviour
 
             imagem = gameObject.AddComponent<Image>() as Image;
             imagem.sprite = spr;
-        }
+        }            
 
     }
 
     void OnMouseDown()
     {
         PosicionarPeca(EnumEstado.MIN);
+        tab.JogadorMinEfetuouJogada(this);
     }
 
 }
