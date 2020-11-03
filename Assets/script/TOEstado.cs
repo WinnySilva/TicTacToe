@@ -6,14 +6,10 @@ using UnityEngine;
 public class TOEstado
 {
     private int[,] tabuleiro;
-    private int valorAvaliacao;
-    private EnumEstado estado;
     private EnumEstado ganhador;
 
     public int[,] Tabuleiro { get => tabuleiro; set => tabuleiro = value; }
-    public int ValorAvaliacao { get => valorAvaliacao; set => valorAvaliacao = value; }
-    public EnumEstado Estado { get => estado; set => estado = value; }
-    public EnumEstado Ganhador { get => ganhador; }
+    public EnumEstado Ganhador { get => ganhador; set => ganhador = value; }
 
 
 
@@ -88,10 +84,3 @@ public class TOEstado
 
 }
 
-public enum EnumEstado
-{
-    MIN = -1,// O
-    MAX = 1, // X
-    Empate = 0
-
-}

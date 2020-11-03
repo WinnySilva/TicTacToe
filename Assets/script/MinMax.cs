@@ -3,65 +3,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MinimaxSpace;
+using UnityEngine.Events;
+using Unity.Mathematics;
 
 namespace MinimaxSpace
 {
     public class MinMax
     {
 
-        public TOEstado MinmaxAvaliacao(TOEstado estadoAtual)
+        public TOEstado MinMaxV2(TOEstado estadoAtual, EnumEstado jogadorAtual, int i)
         {
+                        
             if (estadoAtual.EhEstadoFinal())
             {
-                return estadoAtual;
+                return  estadoAtual;
             }
 
-            EnumEstado jogadorProximo = estadoAtual.Estado == EnumEstado.MAX ? EnumEstado.MIN : EnumEstado.MAX;
-            List<TOEstado> filhos = GeraProximosEstados(estadoAtual);
+            List<TOEstado> estados = null;
+            TOEstado melhorEstado = null; ;
+            Int16 aval = 0;
 
-            List<TOEstado> boaJogada = new List<TOEstado>();
-            List<TOEstado> empates = new List<TOEstado>();
-            List<TOEstado> jogadaRuim = new List<TOEstado>();
-            foreach (TOEstado filho in filhos)
+            if (jogadorAtual == EnumEstado.MIN)
             {
-                TOEstado avaliacao = MinmaxAvaliacao(filho);
-
-                if (avaliacao.Ganhador == EnumEstado.Empate)
+                estados = this.GeraEstados(estadoAtual, EnumEstado.MIN);
+                foreach (TOEstado filho in estados)
                 {
-                    empates.Add(filho);
-                }
-                else if (avaliacao.Ganhador == jogadorProximo)
-                {
-                    boaJogada.Add(filho);
-                }
-                else
-                {
-                    jogadaRuim.Add(filho);
-                }
+                    TOEstado avaliacao = MinMaxV2(filho, EnumEstado.MAX, i + 1);
+                    filho.Ganhador = avaliacao.Ganhador;
 
+                    if (((Int16)avaliacao.Ganhador) <= aval)
+                    {
+                        melhorEstado =  filho;
+                        aval = (Int16)avaliacao.Ganhador;
+                    }
+                }
             }
-            TOEstado estadoEscolhido;
-            if (boaJogada.Count != 0)
+            else if (jogadorAtual == EnumEstado.MAX)
             {
-                estadoEscolhido = boaJogada[0];
-            }
-            else if (empates.Count != 0)
-            {
-                estadoEscolhido = empates[0];
-            }
-            else
-            {
-                estadoEscolhido = jogadaRuim[0];
+                estados = this.GeraEstados(estadoAtual, EnumEstado.MAX);
+                foreach (TOEstado filho in estados)
+                {
+                    TOEstado avaliacao = MinMaxV2(filho, EnumEstado.MIN, i + 1);
+                    filho.Ganhador = avaliacao.Ganhador;
+                    if (((Int16)avaliacao.Ganhador) >= aval)
+                    {
+                        melhorEstado = filho;
+                        aval = (Int16)avaliacao.Ganhador;
+                    }
+                }               
             }
 
-            return estadoEscolhido;
+            return melhorEstado == null ? estados[0]: melhorEstado ;
+
         }
 
-        public List<TOEstado> GeraProximosEstados(TOEstado estadoAtual)
+        public List<TOEstado> GeraEstados(TOEstado estadoAtual, EnumEstado jogador)
         {
             List<TOEstado> filhos = new List<TOEstado>();
             Int32[,] matrizEstado = estadoAtual.Tabuleiro;
-            EnumEstado jogadorProximo = estadoAtual.Estado == EnumEstado.MAX ? EnumEstado.MIN : EnumEstado.MAX; // SE O ESTADO ATUAL É MAX, Os PROXIMOs são MIN
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -72,11 +71,9 @@ namespace MinimaxSpace
                         Int32[,] novo = copiaMatriz(matrizEstado);
                         TOEstado novoEstado = new TOEstado();
 
-                        novo[i, j] = (Int32)jogadorProximo;
+                        novo[i, j] = (Int32)jogador;
                         novoEstado.Tabuleiro = novo;
-                        novoEstado.Estado = jogadorProximo;
                         filhos.Add(novoEstado);
-                        //PrintarMtrix(novo);
                     }
 
                 }

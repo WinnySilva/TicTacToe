@@ -10,7 +10,7 @@ public class BotaoPeca : MonoBehaviour
     public int Valor { get => valor; }
     public EnumEstado Jogador;
     public Vector2Int coord;
-    public TicTacToe tab;
+    public TicTacToeController tab;
 
     private Image imagem;
     private int valor;
@@ -44,6 +44,7 @@ public class BotaoPeca : MonoBehaviour
 
     public void PosicionarPeca(EnumEstado estado)
     {
+
         this.valor = (int)estado;
         Sprite spr = null;
 
@@ -75,14 +76,22 @@ public class BotaoPeca : MonoBehaviour
 
             imagem = gameObject.AddComponent<Image>() as Image;
             imagem.sprite = spr;
-        }            
+        }
 
     }
 
     void OnMouseDown()
     {
-        PosicionarPeca(EnumEstado.MIN);
-        tab.JogadorMinEfetuouJogada(this);
+        if (this.valor != (int)EnumEstado.Empate)
+        {
+            return;
+        }
+        if (tab.estadoPartida == EnumEstadoPartida.JOGADOR01)
+        {
+            PosicionarPeca(EnumEstado.MIN);
+            tab.JogadorMinEfetuouJogada(this);
+        }
+
     }
 
 }

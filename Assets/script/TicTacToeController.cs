@@ -5,7 +5,7 @@ using UnityEngine;
 using MinimaxSpace;
 using System.Dynamic;
 
-public class TicTacToe : MonoBehaviour
+public class TicTacToeController : MonoBehaviour
 {
 
     public UnityEngine.GameObject[] pecas;
@@ -20,7 +20,7 @@ public class TicTacToe : MonoBehaviour
     {
 
         MinMax alg = new MinMax();
-        estadoPartida = EnumEstadoPartida.INICIO;
+        IniciarJogo();
         algo = new MinMax();
     }
 
@@ -34,23 +34,28 @@ public class TicTacToe : MonoBehaviour
             case EnumEstadoPartida.INICIO:
                 TabuleiroInicial();
                 break;
-            case EnumEstadoPartida.ESPERANDOJOGADOR:
+            case EnumEstadoPartida.JOGADOR01:
                 break;
-            case EnumEstadoPartida.FAZENDOJOGADA:
+            case EnumEstadoPartida.JOGADOR02:
                 this.JogadaIA();
                 break;
             case EnumEstadoPartida.FINALJOGO:
+                break;
+            default:
                 break;
         };
 
     }
 
+    public void IniciarJogo()
+    {
+        estadoPartida = EnumEstadoPartida.INICIO;
+    }
     public void TabuleiroInicial()
     {
-        estadoPartida = EnumEstadoPartida.ESPERANDOJOGADOR;
+        estadoPartida = EnumEstadoPartida.JOGADOR01;
         tabuleiroAtual = new TOEstado();
         //Proximo a jogar eh o Min
-        tabuleiroAtual.Estado = EnumEstado.MAX;
         tabuleiroAtual.Tabuleiro = new Int32[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
         MatrixParaTabuleiro(tabuleiroAtual.Tabuleiro);
     }
@@ -60,29 +65,27 @@ public class TicTacToe : MonoBehaviour
         int[,] tab = this.tabuleiroAtual.Tabuleiro;
         tab[UltimaJogada.coord.x, UltimaJogada.coord.y] = UltimaJogada.Valor;
         this.tabuleiroAtual.Tabuleiro = tab;
-        this.tabuleiroAtual.Estado = EnumEstado.MIN;
         if (this.tabuleiroAtual.EhEstadoFinal())
         {
             estadoPartida = EnumEstadoPartida.FINALJOGO;
             return;
         }
-        estadoPartida = EnumEstadoPartida.FAZENDOJOGADA;
+        estadoPartida = EnumEstadoPartida.JOGADOR02;
 
     }
 
     public void JogadaIA()
     {
-        TOEstado novoEstado = algo.MinmaxAvaliacao(this.tabuleiroAtual);
+        TOEstado novoEstado = algo.MinMaxV2(this.tabuleiroAtual, EnumEstado.MAX, 0);
         this.tabuleiroAtual = novoEstado;
         MatrixParaTabuleiro(novoEstado.Tabuleiro);
         if (this.tabuleiroAtual.EhEstadoFinal())
         {
             estadoPartida = EnumEstadoPartida.FINALJOGO;
-
         }
         else
         {
-            estadoPartida = EnumEstadoPartida.ESPERANDOJOGADOR;
+            estadoPartida = EnumEstadoPartida.JOGADOR01;
         }
 
     }
@@ -105,10 +108,4 @@ public class TicTacToe : MonoBehaviour
 
 }
 
-public enum EnumEstadoPartida
-{
-    INICIO = 10,
-    ESPERANDOJOGADOR = 20,
-    FAZENDOJOGADA = 30,
-    FINALJOGO = 40
-}
+
