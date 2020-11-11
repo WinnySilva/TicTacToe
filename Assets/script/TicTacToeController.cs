@@ -25,6 +25,7 @@ public class TicTacToeController : MonoBehaviour
         MinMax alg = new MinMax();
         IniciarJogo();
         algo = new MinMax();
+        BotaoPeca.OnClicked += JogadorMinEfetuouJogada;
     }
 
     // Update is called once per frame

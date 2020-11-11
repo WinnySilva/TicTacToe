@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 583002726}
   - component: {fileID: 583002725}
   m_Layer: 0
-  m_Name: Portal2-13-Music_Of_The_Spheres
+  m_Name: backgroundMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +688,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2997845046042824547, guid: 993a5eeb13a984942ab552d6d87d317f,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 05ef49fc3a6ebdd4fbadbf916108b1fe, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 725cc63169a1eae41b6329cb1cd153b1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.229
   m_Pitch: 1

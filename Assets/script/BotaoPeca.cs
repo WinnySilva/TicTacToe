@@ -11,6 +11,8 @@ public class BotaoPeca : MonoBehaviour
     public EnumEstado Jogador;
     public Vector2Int coord;
     public TicTacToeController tab;
+    public delegate void ClickAction(BotaoPeca pc);
+    public static event ClickAction OnClicked;
 
     private Image imagem;
     private int valor;
@@ -96,7 +98,11 @@ public class BotaoPeca : MonoBehaviour
         if (tab.estadoPartida == EnumEstadoPartida.JOGADOR01)
         {
             PosicionarPeca(EnumEstado.MIN);
-            tab.JogadorMinEfetuouJogada(this);
+           
+            if (OnClicked != null)
+            {
+                OnClicked(this);
+            }
         }
 
     }
