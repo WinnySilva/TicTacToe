@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MinimaxSpace;
 using System.Dynamic;
+using UnityEngine.UI;
 
 public class TicTacToeController : MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class TicTacToeController : MonoBehaviour
     public UnityEngine.GameObject[] pecas;
     public EnumEstado jogadorAtual;
     public EnumEstadoPartida estadoPartida;
+    public Text statusJogo;
     public BotaoPeca UltimaJogada { get; set; }
     private TOEstado tabuleiroAtual;
     private MinMax algo;
+    private bool isCoroutineStarted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,14 +35,24 @@ public class TicTacToeController : MonoBehaviour
         switch (estadoPartida)
         {
             case EnumEstadoPartida.INICIO:
+                statusJogo.text = "Iniciando Partida.";
+                statusJogo.transform.localPosition = new Vector3(0f, -290f, 0f);
                 TabuleiroInicial();
                 break;
             case EnumEstadoPartida.JOGADOR01:
+                statusJogo.text = "Jogador 1";
                 break;
             case EnumEstadoPartida.JOGADOR02:
-                this.JogadaIA();
+                statusJogo.text = "Jogador 2";
+                if (!isCoroutineStarted)
+                {
+                    StartCoroutine(this.JogadaIA());
+                }
+
                 break;
             case EnumEstadoPartida.FINALJOGO:
+                statusJogo.text = "Final de jogo";
+                statusJogo.transform.localPosition = new Vector3(0f,0f,0f);
                 break;
             default:
                 break;
@@ -74,8 +87,11 @@ public class TicTacToeController : MonoBehaviour
 
     }
 
-    public void JogadaIA()
+    IEnumerator JogadaIA()
     {
+        isCoroutineStarted = true;
+        yield return new WaitForSeconds(3);
+
         TOEstado novoEstado = algo.MinMaxV2(this.tabuleiroAtual, EnumEstado.MAX, 0);
         this.tabuleiroAtual = novoEstado;
         MatrixParaTabuleiro(novoEstado.Tabuleiro);
@@ -87,6 +103,8 @@ public class TicTacToeController : MonoBehaviour
         {
             estadoPartida = EnumEstadoPartida.JOGADOR01;
         }
+
+        isCoroutineStarted = false;
 
     }
 

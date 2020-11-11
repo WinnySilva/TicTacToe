@@ -78,6 +78,13 @@ public class BotaoPeca : MonoBehaviour
             imagem.sprite = spr;
         }
 
+        AudioSource audio;
+
+        if (TryGetComponent<AudioSource>(out audio))
+        {
+            audio.Play();
+        }
+
     }
 
     void OnMouseDown()
