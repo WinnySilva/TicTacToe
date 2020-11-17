@@ -17,3 +17,10 @@ public enum EnumEstado
     MAX = 1, // X
     Empate = 0
 }
+
+public enum EnumDificuldade
+{
+    FACIL = 0,
+    MEDIO = 1,
+    DIFICIL = 2
+}

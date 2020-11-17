@@ -5,18 +5,22 @@ using UnityEngine;
 using MinimaxSpace;
 using System.Dynamic;
 using UnityEngine.UI;
+using Random = System.Random;
+using UnityEngine.SceneManagement;
 
 public class TicTacToeController : MonoBehaviour
 {
 
     public UnityEngine.GameObject[] pecas;
-    public EnumEstado jogadorAtual;
     public EnumEstadoPartida estadoPartida;
     public Text statusJogo;
     public BotaoPeca UltimaJogada { get; set; }
     private TOEstado tabuleiroAtual;
     private MinMax algo;
     private bool isCoroutineStarted = false;
+    private ConfigsPers config;
+    private EnumEstado jogadorHumano;
+    private EnumEstado jogadorIa;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,11 @@ public class TicTacToeController : MonoBehaviour
         IniciarJogo();
         algo = new MinMax();
         BotaoPeca.OnClicked += JogadorMinEfetuouJogada;
+
+        config = GameObject.FindGameObjectWithTag("config").GetComponent<ConfigsPers>();
+        jogadorHumano = config.JogadorHumano;
+        jogadorIa = jogadorHumano == EnumEstado.MIN ? EnumEstado.MAX : EnumEstado.MIN;
+
     }
 
     // Update is called once per frame
@@ -52,8 +61,8 @@ public class TicTacToeController : MonoBehaviour
 
                 break;
             case EnumEstadoPartida.FINALJOGO:
-                statusJogo.text = "Final de jogo";
-                statusJogo.transform.localPosition = new Vector3(0f,0f,0f);
+                statusJogo.text = "Final de jogo \n " + this.tabuleiroAtual.Ganhador.ToString();
+                statusJogo.transform.localPosition = new Vector3(0f, 0f, 0f);
                 break;
             default:
                 break;
@@ -67,11 +76,18 @@ public class TicTacToeController : MonoBehaviour
     }
     public void TabuleiroInicial()
     {
-        estadoPartida = EnumEstadoPartida.JOGADOR01;
         tabuleiroAtual = new TOEstado();
         //Proximo a jogar eh o Min
         tabuleiroAtual.Tabuleiro = new Int32[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
         MatrixParaTabuleiro(tabuleiroAtual.Tabuleiro);
+        if (config.IaInicia)
+        {
+            estadoPartida = EnumEstadoPartida.JOGADOR02;
+        }
+        else
+        {
+            estadoPartida = EnumEstadoPartida.JOGADOR01;
+        }
     }
 
     public void JogadorMinEfetuouJogada(BotaoPeca UltimaJogada)
@@ -92,10 +108,40 @@ public class TicTacToeController : MonoBehaviour
     {
         isCoroutineStarted = true;
         yield return new WaitForSeconds(3);
+        TOEstado novoEstado = null;
+        Random rnd = new Random();
+        int rndI = 0;
+        List<TOEstado> lista;
+        switch (config.NivelDificuldade)
+        {
+            case EnumDificuldade.FACIL:
+                lista = algo.GeraEstados(this.tabuleiroAtual, jogadorIa); 
+                rndI = rnd.Next(0, lista.Count);
+                novoEstado = lista[rndI];
+                break;
+            case EnumDificuldade.MEDIO:
+                rndI = rnd.Next(0,100);
+                if (rndI>60)
+                {
+                    lista = algo.GeraEstados(this.tabuleiroAtual, jogadorIa);
+                    rndI = rnd.Next(0, lista.Count);
+                    novoEstado = lista[rndI];
+                }
+                else
+                {
+                    novoEstado = algo.MinMaxV2(this.tabuleiroAtual, jogadorIa, 0);
+                }
 
-        TOEstado novoEstado = algo.MinMaxV2(this.tabuleiroAtual, EnumEstado.MAX, 0);
+                break;
+            case EnumDificuldade.DIFICIL:
+                novoEstado = algo.MinMaxV2(this.tabuleiroAtual, jogadorIa, 0);
+                break;
+        }
+
+
         this.tabuleiroAtual = novoEstado;
         MatrixParaTabuleiro(novoEstado.Tabuleiro);
+
         if (this.tabuleiroAtual.EhEstadoFinal())
         {
             estadoPartida = EnumEstadoPartida.FINALJOGO;
@@ -107,6 +153,11 @@ public class TicTacToeController : MonoBehaviour
 
         isCoroutineStarted = false;
 
+    }
+
+    public void RetornarTelaAnterior()
+    {
+        SceneManager.LoadScene("Entrada");
     }
 
     private void MatrixParaTabuleiro(Int32[,] matrix)

@@ -13,7 +13,7 @@ public class BotaoPeca : MonoBehaviour
     public TicTacToeController tab;
     public delegate void ClickAction(BotaoPeca pc);
     public static event ClickAction OnClicked;
-
+    private ConfigsPers config;
     private Image imagem;
     private int valor;
     private Sprite X;
@@ -26,13 +26,10 @@ public class BotaoPeca : MonoBehaviour
     {
         imagem = GetComponent<Image>();
         valor = 0;
+        config = GameObject.FindGameObjectWithTag("config").GetComponent<ConfigsPers>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     public void ResetarPecas()
     {
@@ -97,7 +94,7 @@ public class BotaoPeca : MonoBehaviour
         }
         if (tab.estadoPartida == EnumEstadoPartida.JOGADOR01)
         {
-            PosicionarPeca(EnumEstado.MIN);
+            PosicionarPeca(config.JogadorHumano);
            
             if (OnClicked != null)
             {
