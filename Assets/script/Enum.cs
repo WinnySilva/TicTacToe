@@ -7,7 +7,9 @@ public enum EnumEstadoPartida
     INICIO = 10,
     JOGADOR01 = 20,
     JOGADOR02 = 30,
-    FINALJOGO = 40
+    FINALIZANDOJOGO = 35,
+    FINALJOGO = 40,
+
 }
 
 

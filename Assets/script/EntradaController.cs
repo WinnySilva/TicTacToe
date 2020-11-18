@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class EntradaController : MonoBehaviour
 {
 
-    public Dropdown dificuldade;
-    public Dropdown jogadorHumano;
-    public Toggle primeiroJogadorIA;
+    public Dropdown Dificuldade;
+    public Dropdown JogadorHumano;
+    public Toggle PrimeiroJogadorIA;
+    public Toggle VersusIA;
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +30,10 @@ public class EntradaController : MonoBehaviour
 
         ConfigsPers config = conf.GetComponent<ConfigsPers>();
 
-        config.IaInicia = primeiroJogadorIA.isOn;
-        config.NivelDificuldade = (EnumDificuldade)this.dificuldade.value;
-        if (jogadorHumano.value == 0)
+        config.IaInicia = PrimeiroJogadorIA.isOn;
+        config.versusIA = VersusIA.isOn;
+        config.NivelDificuldade = (EnumDificuldade)this.Dificuldade.value;
+        if (JogadorHumano.value == 0)
         {
             config.JogadorHumano = EnumEstado.MIN;
         }
@@ -39,9 +41,7 @@ public class EntradaController : MonoBehaviour
         {
             config.JogadorHumano = EnumEstado.MAX;
         }
-             
 
-       // DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("Jogo");
     }
 

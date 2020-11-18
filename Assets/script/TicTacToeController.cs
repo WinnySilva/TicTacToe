@@ -22,6 +22,9 @@ public class TicTacToeController : MonoBehaviour
     private EnumEstado jogadorHumano;
     private EnumEstado jogadorIa;
 
+    private EnumEstado jogador1;
+    private EnumEstado jogador2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +32,14 @@ public class TicTacToeController : MonoBehaviour
         MinMax alg = new MinMax();
         IniciarJogo();
         algo = new MinMax();
-        BotaoPeca.OnClicked += JogadorMinEfetuouJogada;
+        BotaoPeca.OnClicked += JogadorEfetuouJogada;
 
         config = GameObject.FindGameObjectWithTag("config").GetComponent<ConfigsPers>();
         jogadorHumano = config.JogadorHumano;
         jogadorIa = jogadorHumano == EnumEstado.MIN ? EnumEstado.MAX : EnumEstado.MIN;
+
+        jogador1 = config.JogadorHumano;
+        jogador2 = config.JogadorHumano == EnumEstado.MAX ? EnumEstado.MIN : EnumEstado.MAX;
 
     }
 
@@ -54,15 +60,23 @@ public class TicTacToeController : MonoBehaviour
                 break;
             case EnumEstadoPartida.JOGADOR02:
                 statusJogo.text = "Jogador 2";
-                if (!isCoroutineStarted)
+                if (config.versusIA && !isCoroutineStarted)
                 {
                     StartCoroutine(this.JogadaIA());
                 }
 
                 break;
-            case EnumEstadoPartida.FINALJOGO:
+            case EnumEstadoPartida.FINALIZANDOJOGO:
                 statusJogo.text = "Final de jogo \n " + this.tabuleiroAtual.Ganhador.ToString();
                 statusJogo.transform.localPosition = new Vector3(0f, 0f, 0f);
+                AudioSource audio;
+                if (TryGetComponent<AudioSource>(out audio))
+                {
+                    audio.Play();
+                }
+                estadoPartida = EnumEstadoPartida.FINALJOGO;
+                break;
+            case EnumEstadoPartida.FINALJOGO:
                 break;
             default:
                 break;
@@ -90,17 +104,35 @@ public class TicTacToeController : MonoBehaviour
         }
     }
 
-    public void JogadorMinEfetuouJogada(BotaoPeca UltimaJogada)
+    public void JogadorEfetuouJogada(BotaoPeca ultimaJogada)
     {
-        int[,] tab = this.tabuleiroAtual.Tabuleiro;
-        tab[UltimaJogada.coord.x, UltimaJogada.coord.y] = UltimaJogada.Valor;
-        this.tabuleiroAtual.Tabuleiro = tab;
-        if (this.tabuleiroAtual.EhEstadoFinal())
+       
+
+        if (ultimaJogada.Valor != (int)EnumEstado.Empate)
         {
-            estadoPartida = EnumEstadoPartida.FINALJOGO;
             return;
         }
-        estadoPartida = EnumEstadoPartida.JOGADOR02;
+
+        if (estadoPartida == EnumEstadoPartida.JOGADOR01)
+        {
+            ultimaJogada.PosicionarPeca(jogador1);
+            estadoPartida = EnumEstadoPartida.JOGADOR02;
+        }
+        else if (!config.versusIA && estadoPartida == EnumEstadoPartida.JOGADOR02)
+        {
+            ultimaJogada.PosicionarPeca(jogador2);
+            estadoPartida = EnumEstadoPartida.JOGADOR01;
+        }
+
+        int[,] tab = this.tabuleiroAtual.Tabuleiro;
+        tab[ultimaJogada.coord.x, ultimaJogada.coord.y] = ultimaJogada.Valor;
+        this.tabuleiroAtual.Tabuleiro = tab;
+
+        if (this.tabuleiroAtual.EhEstadoFinal())
+        {
+            estadoPartida = EnumEstadoPartida.FINALIZANDOJOGO;
+            return;
+        }
 
     }
 
@@ -115,13 +147,13 @@ public class TicTacToeController : MonoBehaviour
         switch (config.NivelDificuldade)
         {
             case EnumDificuldade.FACIL:
-                lista = algo.GeraEstados(this.tabuleiroAtual, jogadorIa); 
+                lista = algo.GeraEstados(this.tabuleiroAtual, jogadorIa);
                 rndI = rnd.Next(0, lista.Count);
                 novoEstado = lista[rndI];
                 break;
             case EnumDificuldade.MEDIO:
-                rndI = rnd.Next(0,100);
-                if (rndI>60)
+                rndI = rnd.Next(0, 100);
+                if (rndI > 60)
                 {
                     lista = algo.GeraEstados(this.tabuleiroAtual, jogadorIa);
                     rndI = rnd.Next(0, lista.Count);

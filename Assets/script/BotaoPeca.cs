@@ -18,18 +18,16 @@ public class BotaoPeca : MonoBehaviour
     private int valor;
     private Sprite X;
     private Sprite O;
-
-
-
+   
     // Start is called before the first frame update
     void Start()
     {
         imagem = GetComponent<Image>();
         valor = 0;
         config = GameObject.FindGameObjectWithTag("config").GetComponent<ConfigsPers>();
+       
+
     }
-
-
 
     public void ResetarPecas()
     {
@@ -88,20 +86,7 @@ public class BotaoPeca : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (this.valor != (int)EnumEstado.Empate)
-        {
-            return;
-        }
-        if (tab.estadoPartida == EnumEstadoPartida.JOGADOR01)
-        {
-            PosicionarPeca(config.JogadorHumano);
-           
-            if (OnClicked != null)
-            {
-                OnClicked(this);
-            }
-        }
-
+        OnClicked(this);       
     }
 
 }

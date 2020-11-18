@@ -8,6 +8,7 @@ public class ConfigsPers : MonoBehaviour
     public EnumDificuldade NivelDificuldade;
     public EnumEstado JogadorHumano;
     public bool IaInicia;
+    public bool versusIA;
 
 
     void Awake()
