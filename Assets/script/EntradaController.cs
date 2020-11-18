@@ -51,4 +51,18 @@ public class EntradaController : MonoBehaviour
         Application.Quit();
 
     }
+
+    public void OnChangeVersusIA()
+    {
+        if (VersusIA.isOn)
+        {
+            PrimeiroJogadorIA.gameObject.SetActive(true);
+            Dificuldade.gameObject.SetActive(true);
+        }
+        else
+        {
+            PrimeiroJogadorIA.gameObject.SetActive(false);
+            Dificuldade.gameObject.SetActive(false);
+        }
+    }
 }

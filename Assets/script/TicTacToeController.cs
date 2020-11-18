@@ -67,13 +67,7 @@ public class TicTacToeController : MonoBehaviour
 
                 break;
             case EnumEstadoPartida.FINALIZANDOJOGO:
-                statusJogo.text = "Final de jogo \n " + this.tabuleiroAtual.Ganhador.ToString();
-                statusJogo.transform.localPosition = new Vector3(0f, 0f, 0f);
-                AudioSource audio;
-                if (TryGetComponent<AudioSource>(out audio))
-                {
-                    audio.Play();
-                }
+                FinalizandoJogo();
                 estadoPartida = EnumEstadoPartida.FINALJOGO;
                 break;
             case EnumEstadoPartida.FINALJOGO:
@@ -176,7 +170,7 @@ public class TicTacToeController : MonoBehaviour
 
         if (this.tabuleiroAtual.EhEstadoFinal())
         {
-            estadoPartida = EnumEstadoPartida.FINALJOGO;
+            estadoPartida = EnumEstadoPartida.FINALIZANDOJOGO;
         }
         else
         {
@@ -190,6 +184,32 @@ public class TicTacToeController : MonoBehaviour
     public void RetornarTelaAnterior()
     {
         SceneManager.LoadScene("Entrada");
+    }
+
+    public void FinalizandoJogo()
+    {
+        string ganhador;
+
+        if (tabuleiroAtual.Ganhador == EnumEstado.Empate)
+        {
+            ganhador = "EMPATE";
+        }else if (tabuleiroAtual.Ganhador == this.jogador1)
+        {
+            ganhador = "JOGADOR UM";
+        }
+        else
+        {
+            ganhador = "JOGADOR DOIS";
+        }
+
+
+        statusJogo.text = "Final de jogo \n " + ganhador;
+        statusJogo.transform.localPosition = new Vector3(0f, 0f, 0f);
+        AudioSource audio;
+        if (TryGetComponent<AudioSource>(out audio))
+        {
+            audio.Play();
+        }
     }
 
     private void MatrixParaTabuleiro(Int32[,] matrix)
